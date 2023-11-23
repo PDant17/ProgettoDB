@@ -1,25 +1,28 @@
 Commenti
-Il gentleman driver è sempre un pilota amatoriale, ma un pilota amatoriale non sempre è un gentleman driver.
 Il gentleman driver finanza solo ed esclusivamente la scuderia che gli fornisce la vettura.
 Un componente può essere installato su diverse macchine, allo stesso prezzo.
 L'identificatore del pilota è stato aggiunto per evitare casi di omonimia o di chiavi composte
+
+(Commenti)
 Si suppone che non ci siano costruttori (aziende) con lo stesso nome
 Si suppone che non ci siano circuiti con lo stesso nome
 Si suppone che non ci siano gare con lo stesso nome
 Si suppone che non ci siano vetture con lo stesso numero di gara
+(fine)
+
 Il campionato è organizzato su diverse gare
 Tutte le ridondanze sono state inserite per possibile efficienza
 Una vettura può iscriversi soltanto una volta per gara
 Si suppone che il punteggio venga assegnato (anche se nullo) ad ogni vettura parteciante alla gara
 Si suppone la permanenza di un pilota in una scuderia per tutta la durata del campionato
 Si suppone che i piloti abbiano un numero fisso di licenze per l'intera durata del campionato
-Si suppone che un pilota se guida una vettura, faccia parte della scuderia proprietaria della vettura
-Si suppone che se più piloti guidano una vettura, essi facciano parte del suo equipaggio
-Si suppone che una vettura abbia nello stesso momento, rispettivamente, un solo motore, un solo telaio, un solo cambio
+
+
+Sostituito motivo del ritiro in stato fine gara, per rimuovere l'attributo opzionale.
+Aggiunto numero piloti all'entità vettura (rid.)
 
 Possibili modifiche
-Cambio di motivo del ritiro in stato fine gara (evitare 0,1)
-Inserimento codice in costituire (problema n,m)
-
+Inserimento codice in costituire (problema n,m) [non risolto]
+{Data messa come identificatore in costituire. Non sarà possibile installare lo stesso componente nella stessa vettura.}
 
 
