@@ -17,6 +17,9 @@ Si suppone che il punteggio venga assegnato (anche se nullo) ad ogni vettura par
 Si suppone che un pilota non cambi la propria vettura per un'altra durante il campionato
 Si suppone che i piloti abbiano un numero fisso di licenze per l'intera durata del campionato
 
+Osservazioni
+Si è notato che il problema della possibilità di mettere nella stessa vettura uno stesso tipo di componente, nel caso l'attuale si guasti, non è possibile risolverlo in questa fase del progetto.
+
 
 Sostituito motivo del ritiro in stato fine gara, per rimuovere l'attributo opzionale.
 Aggiunto numero piloti all'entità vettura (rid.)
