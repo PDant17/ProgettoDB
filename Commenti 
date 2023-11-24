@@ -14,7 +14,7 @@ Il campionato è organizzato su diverse gare
 Tutte le ridondanze sono state inserite per possibile efficienza
 Una vettura può iscriversi soltanto una volta per gara
 Si suppone che il punteggio venga assegnato (anche se nullo) ad ogni vettura parteciante alla gara
-Si suppone la permanenza di un pilota in una scuderia per tutta la durata del campionato
+Si suppone che un pilota non cambi la propria vettura per un'altra durante il campionato
 Si suppone che i piloti abbiano un numero fisso di licenze per l'intera durata del campionato
 
 
