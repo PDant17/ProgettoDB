@@ -1,0 +1,275 @@
+<mxfile host="app.diagrams.net" modified="2023-12-04T22:12:41.908Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36 OPR/104.0.0.0" etag="_S-3CaTnEzXNI524TxvH" version="22.1.5" type="device">
+  <diagram name="Pagina-1" id="Ycthig_5q6oGQ6ffq_v8">
+    <mxGraphModel dx="2157" dy="753" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-1" value="#Finanziamenti" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="450" y="240" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-2" value="&lt;u&gt;Codice Pilota&lt;/u&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="120" y="330" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-3" value="Quota" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="540" y="240" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-4" value="&lt;u&gt;Codice&lt;br&gt;Gentleman&lt;/u&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="610" y="240" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-5" value="Nome" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="190" y="330" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-6" value="Gentleman Driver" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="435" y="210" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-7" value="Data di nascita" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="260" y="330" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-8" value="Cognome" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="330" y="330" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-9" value="Nazionalità" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="400" y="330" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-75" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="DTnvr3yPbYFzJhz--0Ry-10" target="DTnvr3yPbYFzJhz--0Ry-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-10" value="&lt;u&gt;Codice Pilota&lt;/u&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="680" y="240" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-11" value="#Licenze" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="470" y="330" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-12" value="Data prima licenza" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="540" y="330" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-77" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="DTnvr3yPbYFzJhz--0Ry-13" target="DTnvr3yPbYFzJhz--0Ry-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-13" value="&lt;u&gt;Numero Vettura&lt;/u&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="610" y="330" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-14" value="Pilota" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="110" y="300" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-79" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="DTnvr3yPbYFzJhz--0Ry-15" target="DTnvr3yPbYFzJhz--0Ry-24">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-15" value="&lt;u&gt;Nome Scuderia&lt;/u&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="279" y="420" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-16" value="Modello" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="349" y="420" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-17" value="&lt;u&gt;Numero di Gara&lt;/u&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="419" y="420" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-19" value="Vettura" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="266.5" y="390" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-24" value="&lt;u&gt;Nome&lt;/u&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="10" y="430" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-25" value="#Finanziamenti totali" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="430" width="87.5" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-26" value="Sede" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="167.5" y="430" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-27" value="Scuderia" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry y="400" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-28" value="&lt;u&gt;Nome&lt;/u&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-70" y="640" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-29" value="Ragione sociale" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry y="640" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-30" value="Sede" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="70" y="640" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-31" value="#Componenti" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="140" y="640" width="80" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-32" value="Costruttore" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="-80" y="610" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-86" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="DTnvr3yPbYFzJhz--0Ry-33" target="DTnvr3yPbYFzJhz--0Ry-28">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="310" y="700" />
+              <mxPoint x="-35" y="700" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-33" value="&lt;u&gt;Nome Costruttore&lt;/u&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="292.5" y="640" width="77.5" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-34" value="Costo" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="370" y="640" width="80" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-35" value="&lt;u&gt;Codice Componente&lt;/u&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="450" y="640" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-36" value="Componente" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="282.5" y="610" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-37" value="&lt;u&gt;Nome&lt;/u&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="670" y="535" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-38" value="Tipo" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="740" y="535" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-39" value="Data" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="810" y="535" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-40" value="Durata" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="880" y="535" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-82" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="DTnvr3yPbYFzJhz--0Ry-41" target="DTnvr3yPbYFzJhz--0Ry-43">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="985" y="610" />
+              <mxPoint x="762" y="610" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-41" value="&lt;u&gt;Nome Circuito&lt;/u&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="950" y="535" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-42" value="Gara" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="660" y="510" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-43" value="&lt;u&gt;Nome&lt;/u&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="709" y="640" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-44" value="Paese" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="779" y="640" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-45" value="Lunghezza" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="849" y="640" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-46" value="#Curve" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="919" y="640" width="80" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-47" value="Circuito" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="700" y="610" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-48" value="&lt;u&gt;Codice Motore&lt;/u&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="-3.5" y="780" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-49" value="Tipo" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="66.5" y="780" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-50" value="Cilindrata" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="136.5" y="780" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-51" value="#Cilindri" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="206.5" y="780" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-88" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.25;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="DTnvr3yPbYFzJhz--0Ry-52" target="DTnvr3yPbYFzJhz--0Ry-35">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="320" y="720" />
+              <mxPoint x="468" y="720" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-52" value="&lt;u&gt;Codice Componente&lt;/u&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="276.5" y="780" width="81" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-53" value="Motore" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="-12.5" y="750" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-54" value="&lt;u&gt;Codice Telaio&lt;/u&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="200" y="880" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-55" value="Peso" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="270" y="880" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-56" value="Materiale" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="340" y="880" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-89" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="DTnvr3yPbYFzJhz--0Ry-57" target="DTnvr3yPbYFzJhz--0Ry-35">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-57" value="&lt;u&gt;Codice Componente&lt;/u&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="410" y="880" width="80" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-58" value="Telaio" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="190" y="850" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-59" value="&lt;u&gt;Codice Cambio&lt;/u&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="539" y="780" width="77.5" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-60" value="Marcia" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="616.5" y="780" width="80" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-90" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.75;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="DTnvr3yPbYFzJhz--0Ry-61" target="DTnvr3yPbYFzJhz--0Ry-35">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="738" y="740" />
+              <mxPoint x="503" y="740" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-61" value="&lt;u&gt;Codice Componente&lt;/u&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="696.5" y="780" width="82.5" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-62" value="Cambio" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="529" y="750" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-80" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="DTnvr3yPbYFzJhz--0Ry-63" target="DTnvr3yPbYFzJhz--0Ry-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-63" value="&lt;u&gt;Numero Vettura&lt;/u&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="670" y="420" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-64" value="Punteggio" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="740" y="420" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-65" value="Stato fine gara" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="810" y="420" width="70" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-66" value="&lt;u&gt;Nome &lt;br&gt;Gara&lt;/u&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="880" y="420" width="80" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-67" value="Iscrizione" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="660" y="390" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-83" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="DTnvr3yPbYFzJhz--0Ry-68" target="DTnvr3yPbYFzJhz--0Ry-17">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="260" y="560" />
+              <mxPoint x="260" y="510" />
+              <mxPoint x="454" y="510" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-68" value="&lt;u&gt;Numero Vettura&lt;/u&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="280" y="540" width="77.5" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-69" value="Data installazione" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="357.5" y="540" width="80" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-70" value="&lt;u&gt;Codice Componente&lt;/u&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="437.5" y="540" width="82.5" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-71" value="Composizione" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="270" y="510" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-81" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.684;entryY=0.009;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="DTnvr3yPbYFzJhz--0Ry-66" target="DTnvr3yPbYFzJhz--0Ry-37">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="920" y="500" />
+              <mxPoint x="718" y="500" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="DTnvr3yPbYFzJhz--0Ry-84" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.411;entryY=-0.036;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="DTnvr3yPbYFzJhz--0Ry-70" target="DTnvr3yPbYFzJhz--0Ry-35">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
