@@ -97,7 +97,9 @@ create table composizione(
 numero_vettura numeric(4),
 data_installazione date not null,
 codice_componente int,
-foreign key(numero_vettura) references vettura(numero_di_gara),
+foreign key(numero_vettura) references vettura(numero_di_gara)
+on update cascade
+on delete cascade,
 foreign key(codice_componente) references componente(codice_componente)
 on update cascade
 on delete cascade
@@ -119,7 +121,9 @@ numero_vettura numeric(4),
 nome_gara varchar(50),
 punteggio numeric (3) not null,
 stato_fine_gara varchar(16) not null,
-foreign key(numero_vettura) references vettura(numero_di_gara),
+foreign key(numero_vettura) references vettura(numero_di_gara)
+on update cascade
+on delete cascade,
 foreign key(nome_gara) references gara(nome)
 on update cascade
 on delete cascade
