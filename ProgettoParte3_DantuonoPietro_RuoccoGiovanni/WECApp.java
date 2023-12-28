@@ -1,54 +1,9 @@
-/* import java.sql.*;
-import java.util.*;
-
-public class WECApp {
-    public static void main(String[] arg) {
-        Scanner input = new Scanner(System.in);
-        System.out.println("Inserisci la spesa totale attesa");
-        int x = Integer.parseInt(input.nextLine());
-        executeEsercizio(x);
-    }
-
-    public static void executeEsercizio(int x) {
-        Connection con = null;
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            String url = "jdbc:mysql://localhost:3306/condominio"
-                    + "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-            String username = "<username>";
-            String pwd = "<pwd>";
-            con = DriverManager.getConnection(url, username, pwd);
-        } catch (Exception e) {
-            System.out.println("Connessione fallita!!!");
-        }
-        try {
-            String query = "SELECT condominio, scala, interno "
-                    + "FROM rif_appartamento JOIN spesa ON rif_appartamento.spesa = spesa.codice "
-                    + "GROUP BY condominio, scala, interno "
-                    + "HAVING SUM(importo) > " + x;
-
-            Statement pquery = con.createStatement();
-            ResultSet result = pquery.executeQuery(query);
-
-            System.out.println("Ecco i condomini che hanno pagato più di " + x + " euro per spese");
-            while (result.next()) {
-                String condominio = result.getString("condominio");
-                String scala = result.getString("scala");
-                int interno = result.getInt("interno");
-                System.out.println(condominio + "\t" + scala + "\t" + interno);
-            }
-        } catch (Exception e) {
-            System.out.println("Errore nell'interrogazione");
-        }
-    }
-}
-*/
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.*;
+import java.util.*;
 
 public class WECApp extends JFrame {
     private static final String DATABASE_URL = "jdbc:mysql://localhost:3306/campionato";
@@ -58,7 +13,7 @@ public class WECApp extends JFrame {
     private JTextArea resultArea;
 
     public WECApp() {
-        super("Database Query GUI");
+        super("WECApp Campionato");
         setLayout(new BorderLayout());
 
         resultArea = new JTextArea();
@@ -68,34 +23,10 @@ public class WECApp extends JFrame {
         add(scrollPane, BorderLayout.CENTER);
 
         JPanel buttonPanel = new JPanel(new GridLayout(5, 3));
-
-        // Definisci le tue query qui
-        String[] queries = {
-                "insert into scuderia (nome, sede, finanziamenti_totali) values (?, ?, ?);",
-                "select count(*) from scuderia where nome = ?;",
-                "select count(*) from vettura where numero_di_gara = ?;",
-                "select count(*) as gentleman_driver from gentleman_driver where codice_gentleman = ?;",
-                "select count(*) as vetture from vettura where numero_di_gara = ?;",
-                "select count(*) as totale from iscrizione where nome_gara = ?;",
-                "select count(*) from composizione inner join componente on composizione.codice_componente = componente.codice_componente left join motore on motore.codice_componente = componente.codice_componente left join cambio on cambio.codice_componente = componente.codice_componente left join telaio on telaio.codice_componente = componente.codice_componente where numero_vettura = ? and composizione.codice_componente = ?;",
-                "select nome, finanziamenti_totali from scuderia;",
-                "select nome, finanziamenti_totali from scuderia inner join vettura on scuderia.nome = vettura.nome_scuderia inner join iscrizione on vettura.numero_di_gara = iscrizione.numero_vettura group by nome, finanziamenti_totali;",
-                "select p.codice_pilota, p.nome, cognome, data_di_nascita, nazionalità, licenze, data_prima_licenza, p.numero_vettura, codice_gentleman, quota, finanziamenti from pilota p left join gentleman_driver on p.codice_pilota = gentleman_driver.codice_pilota inner join vettura on p.numero_vettura = vettura.numero_di_gara inner join iscrizione on vettura.numero_di_gara = iscrizione.numero_vettura inner join gara g on iscrizione.nome_gara = g.nome inner join circuito c on g.nome_circuito = c.nome where iscrizione.punteggio = 25 and p.nazionalità = c.paese group by p.codice_pilota, p.nome, cognome, data_di_nascita, nazionalità, licenze, data_prima_licenza, p.numero_vettura, codice_gentleman, quota, finanziamenti;",
-                "select scuderia.nome, vettura.numero_di_gara, 100/count(pilota.codice_pilota)*count(gentleman_driver.codice_pilota) as percentuale from scuderia inner join vettura on scuderia.nome = vettura.nome_scuderia inner join pilota on vettura.numero_di_gara =  pilota.numero_vettura left join gentleman_driver on pilota.codice_pilota = gentleman_driver.codice_pilota group by vettura.numero_di_gara;",
-                "select * from costruttore;",
-                "select vettura.numero_di_gara, sum(iscrizione.punteggio) as punteggio_finale from vettura inner join iscrizione on vettura.numero_di_gara = iscrizione.numero_vettura group by vettura.numero_di_gara;",
-                "select motore.tipo, sum(iscrizione.punteggio) as punteggio_finale from motore inner join componente on motore.codice_componente = componente.codice_componente inner join composizione on componente.codice_componente = composizione.codice_componente inner join vettura on composizione.numero_vettura = vettura.numero_di_gara inner join iscrizione on vettura.numero_di_gara = iscrizione.numero_vettura group by motore.codice_motore;",
-                "select scuderia.nome, vettura.numero_di_gara, sum(iscrizione.punteggio)/sum(round(time_to_sec(gara.durata)/60)) as rapporto from scuderia inner join vettura on scuderia.nome = vettura.nome_scuderia inner join iscrizione on vettura.numero_di_gara = iscrizione.numero_vettura inner join gara on iscrizione.nome_gara = gara.nome group by scuderia.nome, vettura.numero_di_gara;"               
-                // "INSERT INTO tua_tabella1 (col1, col2) VALUES (?, ?)",
-                // "UPDATE tua_tabella2 SET col1 = ? WHERE col2 = ?"
-                // Aggiungi le tue query personalizzate qui
-        };
         
-        int i = 0;
-        for (String query : queries) {
-        	i++;
+        for (int i = 0; i <= 15; i++) {
             JButton button = new JButton("Numero " + i);
-            button.addActionListener(new QueryButtonListener(query));
+            button.addActionListener(new QueryButtonListener(i));
             buttonPanel.add(button);
         }
 
@@ -108,10 +39,10 @@ public class WECApp extends JFrame {
     }
 
     private class QueryButtonListener implements ActionListener {
-        private String query;
+        private int i;
 
-        public QueryButtonListener(String query) {
-            this.query = query;
+        public QueryButtonListener(int i) {
+            this.i = i;
         }
 
         @Override
@@ -129,32 +60,52 @@ public class WECApp extends JFrame {
             	String col5Value;
             	String col6Value;
             	String col7Value;
-            	String col8Value;
-            	String query2;
+            	String query;
             	
 
-                switch (query) {
-                	//case "insert into scuderia (nome, sede, finanziamenti_totali) values (?, ?, ?);":
-                	//case "select nome from scuderia;":
-                	//case "select count(*) as pro from vettura inner join pilota on vettura.numero_di_gara = pilota.numero_vettura where vettura.numero_di_gara = 103 and pilota.licenze > 1;":
-                	//case "select count(*) as gentleman_driver from gentleman_driver where codice_gentleman = ?;":
-                	//case "select count(*) as vetture from vettura where numero_di_gara = ?;":
-                	//case "select count(*) as totale from iscrizione where nome_gara = ?;":
-                	//case "select count(*) from composizione inner join componente on composizione.codice_componente = componente.codice_componente left join motore on motore.codice_componente = componente.codice_componente left join cambio on cambio.codice_componente = componente.codice_componente left join telaio on telaio.codice_componente = componente.codice_componente where numero_vettura = ? and composizione.codice_componente = ?;":
-                	//case "select nome, finanziamenti_totali from scuderia;":
-                	case "select nome, finanziamenti_totali from scuderia inner join vettura on scuderia.nome = vettura.nome_scuderia inner join iscrizione on vettura.numero_di_gara = iscrizione.numero_vettura group by nome, finanziamenti_totali;":
-                	case "select p.codice_pilota, p.nome, cognome, data_di_nascita, nazionalità, licenze, data_prima_licenza, p.numero_vettura, codice_gentleman, quota, finanziamenti from pilota p left join gentleman_driver on p.codice_pilota = gentleman_driver.codice_pilota inner join vettura on p.numero_vettura = vettura.numero_di_gara inner join iscrizione on vettura.numero_di_gara = iscrizione.numero_vettura inner join gara g on iscrizione.nome_gara = g.nome inner join circuito c on g.nome_circuito = c.nome where iscrizione.punteggio = 25 and p.nazionalità = c.paese group by p.codice_pilota, p.nome, cognome, data_di_nascita, nazionalità, licenze, data_prima_licenza, p.numero_vettura, codice_gentleman, quota, finanziamenti;":
-                	case "select scuderia.nome, vettura.numero_di_gara, 100/count(pilota.codice_pilota)*count(gentleman_driver.codice_pilota) as percentuale from scuderia inner join vettura on scuderia.nome = vettura.nome_scuderia inner join pilota on vettura.numero_di_gara =  pilota.numero_vettura left join gentleman_driver on pilota.codice_pilota = gentleman_driver.codice_pilota group by vettura.numero_di_gara;":
-                	case "select * from costruttore;":
-                	case "select vettura.numero_di_gara, sum(iscrizione.punteggio) as punteggio_finale from vettura inner join iscrizione on vettura.numero_di_gara = iscrizione.numero_vettura group by vettura.numero_di_gara;":
-                	case "select motore.tipo, sum(iscrizione.punteggio) as punteggio_finale from motore inner join componente on motore.codice_componente = componente.codice_componente inner join composizione on componente.codice_componente = composizione.codice_componente inner join vettura on composizione.numero_vettura = vettura.numero_di_gara inner join iscrizione on vettura.numero_di_gara = iscrizione.numero_vettura group by motore.codice_motore;":
-                	case "select scuderia.nome, vettura.numero_di_gara, sum(iscrizione.punteggio)/sum(round(time_to_sec(gara.durata)/60)) as rapporto from scuderia inner join vettura on scuderia.nome = vettura.nome_scuderia inner join iscrizione on vettura.numero_di_gara = iscrizione.numero_vettura inner join gara on iscrizione.nome_gara = gara.nome group by scuderia.nome, vettura.numero_di_gara;":               
-                    //Logica per le query di selezione
+                switch (i) {
+                	case 8: query = "select nome, finanziamenti_totali from scuderia;";
+                		resultSet = statement.executeQuery(query);
+                		displayResultSet(resultSet);
+                		break;
+                	
+                	case 9: query = "select nome, finanziamenti_totali from scuderia inner join vettura on scuderia.nome = vettura.nome_scuderia inner join iscrizione on vettura.numero_di_gara = iscrizione.numero_vettura group by nome, finanziamenti_totali;";
+                		resultSet = statement.executeQuery(query);
+                		displayResultSet(resultSet);
+                		break;
+                	
+                	case 10: query = "select p.codice_pilota, p.nome, cognome, data_di_nascita, nazionalità, licenze, data_prima_licenza, p.numero_vettura, codice_gentleman, quota, finanziamenti from pilota p left join gentleman_driver on p.codice_pilota = gentleman_driver.codice_pilota inner join vettura on p.numero_vettura = vettura.numero_di_gara inner join iscrizione on vettura.numero_di_gara = iscrizione.numero_vettura inner join gara g on iscrizione.nome_gara = g.nome inner join circuito c on g.nome_circuito = c.nome where iscrizione.punteggio = 25 and p.nazionalità = c.paese group by p.codice_pilota, p.nome, cognome, data_di_nascita, nazionalità, licenze, data_prima_licenza, p.numero_vettura, codice_gentleman, quota, finanziamenti;";
+                		resultSet = statement.executeQuery(query);
+                		displayResultSet(resultSet);
+                		break;
+                	
+                	case 11: query = "select scuderia.nome, vettura.numero_di_gara, 100/count(pilota.codice_pilota)*count(gentleman_driver.codice_pilota) as percentuale from scuderia inner join vettura on scuderia.nome = vettura.nome_scuderia inner join pilota on vettura.numero_di_gara =  pilota.numero_vettura left join gentleman_driver on pilota.codice_pilota = gentleman_driver.codice_pilota group by vettura.numero_di_gara;";
+                		resultSet = statement.executeQuery(query);
+                		displayResultSet(resultSet);
+                		break;
+                	
+                	case 12: query = "select * from costruttore;";
+                		resultSet = statement.executeQuery(query);
+                		displayResultSet(resultSet);
+                		break;
+                		
+                	case 13: query = "select vettura.numero_di_gara, sum(iscrizione.punteggio) as punteggio_finale from vettura inner join iscrizione on vettura.numero_di_gara = iscrizione.numero_vettura group by vettura.numero_di_gara;";
+                		resultSet = statement.executeQuery(query);
+                		displayResultSet(resultSet);
+                		break;
+                		
+                	case 14: query = "select motore.tipo, sum(iscrizione.punteggio) as punteggio_finale from motore inner join componente on motore.codice_componente = componente.codice_componente inner join composizione on componente.codice_componente = composizione.codice_componente inner join vettura on composizione.numero_vettura = vettura.numero_di_gara inner join iscrizione on vettura.numero_di_gara = iscrizione.numero_vettura group by motore.codice_motore;";
+                		resultSet = statement.executeQuery(query);
+                		displayResultSet(resultSet);
+                    	break;
+                    	
+                	case 15: query = "select scuderia.nome, vettura.numero_di_gara, sum(iscrizione.punteggio)/sum(round(time_to_sec(gara.durata)/60)) as rapporto from scuderia inner join vettura on scuderia.nome = vettura.nome_scuderia inner join iscrizione on vettura.numero_di_gara = iscrizione.numero_vettura inner join gara on iscrizione.nome_gara = gara.nome group by scuderia.nome, vettura.numero_di_gara;";   
                         resultSet = statement.executeQuery(query);
                         displayResultSet(resultSet);
                         break;
 
-                    case "insert into scuderia (nome, sede, finanziamenti_totali) values (?, ?, ?);":
+                    case 1:
+                    	query = "insert into scuderia (nome, sede, finanziamenti_totali) values (?, ?, ?);";
                         col1Value = JOptionPane.showInputDialog(WECApp.this, "Inserisci valore per il nome:");
                         col2Value = JOptionPane.showInputDialog(WECApp.this, "Inserisci valore per la sede:");
                         col3Value = JOptionPane.showInputDialog(WECApp.this, "Inserisci valore per i finanziamenti totali:");
@@ -164,28 +115,119 @@ public class WECApp extends JFrame {
                             preparedStatement.setString(2, col2Value);
                             preparedStatement.setString(3, col3Value);
                             preparedStatement.executeUpdate();
-                            resultArea.setText("Inserimento eseguito con successo!");
+                            resultArea.setText("Inserimento scuderia eseguito con successo!");
                         }
                         break;
 
-                    case "select count(*) from scuderia where nome = ?;":
+                    case 2:
+                    	query = "select count(*) from scuderia where nome = ?;";
                         newValue = JOptionPane.showInputDialog(WECApp.this, "Inserisci il nome della scuderia:");
                         
                         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                     		preparedStatement.setString(1, newValue);
                     		resultSet = preparedStatement.executeQuery();
-                    		if(handleResultSet(resultSet, "count")) {
-                            	query2 = "insert into vettura (numero_di_gara, modello, nome_scuderia) values (?, ?, ?);";
+                    		if(handleResultSet(resultSet, "count") == 1) {
+                            	query = "insert into vettura (numero_di_gara, modello, nome_scuderia) values (?, ?, ?);";
                             	
                             	col1Value = JOptionPane.showInputDialog(WECApp.this, "Inserisci valore per il numero di gara:");
                                 col2Value = JOptionPane.showInputDialog(WECApp.this, "Inserisci valore per il modello:");
                             	
-                            	try (PreparedStatement preparedStatement2 = connection.prepareStatement(query2)) {
+                            	try (PreparedStatement preparedStatement2 = connection.prepareStatement(query)) {
                             		preparedStatement2.setString(1, col1Value);
                             		preparedStatement2.setString(2, col2Value);
                             		preparedStatement2.setString(3, newValue);
                             		preparedStatement2.executeUpdate();
-                            		resultArea.setText("Inserimento eseguito con successo!");
+                            		resultArea.setText("Inserimento vettura eseguito con successo!");
+                            	}
+                            	java.util.List<String> type = new ArrayList<>();
+                            	java.util.List<String> typeCode = new ArrayList<>();
+                            	col2Value = JOptionPane.showInputDialog(WECApp.this, "Inserisci valore per nuovi componenti [0, 1, 2, 3]:");
+                            	
+                            	for(int i = 0; i <= Integer.parseInt(col2Value); i++) {
+                            		query = "select count(*) from costruttore where nome = ?;";
+                            		newValue = JOptionPane.showInputDialog(WECApp.this, "Inserisci il nome del costruttore:");
+                            		
+                            		try (PreparedStatement preparedStatement3 = connection.prepareStatement(query)) {
+                                		preparedStatement3.setString(1, newValue);
+                                		resultSet = preparedStatement3.executeQuery();
+                                		if(handleResultSet(resultSet, "count") == 1) {
+                                			query = "insert into componente (codice_componente, costo, nome_costruttore) values (?, ?, ?);";
+                                			
+                                			type.add(JOptionPane.showInputDialog(WECApp.this, "Inserisci valore per il tipo componente [motore, telaio, cambio]:"));
+                                			typeCode.add(JOptionPane.showInputDialog(WECApp.this, "Inserisci valore per il codice componente:"));
+                                			col4Value = JOptionPane.showInputDialog(WECApp.this, "Inserisci valore per il costo:");
+                                			col5Value = JOptionPane.showInputDialog(WECApp.this, "Inserisci valore per il costo:");
+                                			
+                                			try (PreparedStatement preparedStatement4 = connection.prepareStatement(query)) {
+                                        		preparedStatement4.setString(1, typeCode.get(i));
+                                        		preparedStatement4.setString(2, col4Value);
+                                        		preparedStatement4.setString(3, newValue);
+                                        		preparedStatement4.executeUpdate();
+                                        		resultArea.setText("Inserimento componente eseguito con successo!");
+                                        	}
+                                			query = "insert into composizione (numero_vettura, data_installazione, codice_componente) values (?, ?, ?);";
+                                			
+                                			col4Value = JOptionPane.showInputDialog(WECApp.this, "Inserisci valore per la data di installazione [yyyy-mm-dd]:");
+                                			try (PreparedStatement preparedStatement5 = connection.prepareStatement(query)) {
+                                				preparedStatement5.setString(1, col1Value);
+                                				preparedStatement5.setString(2, col4Value);
+                                				preparedStatement5.setString(3, typeCode.get(i));
+                                				preparedStatement5.executeUpdate();
+                                				resultArea.setText("Inserimento composizione eseguito con successo!");
+                                			}
+                                		}
+                                		else {
+                                        	JOptionPane.showMessageDialog(WECApp.this, "Vincolo d'integrità violato", "Errore", JOptionPane.ERROR_MESSAGE);
+                                        }	
+                            		}
+                            	}
+                            	if(type.contains("motore")) {
+                            		query = "insert into motore (codice_motore, tipo, cilindrata, cilindri, codice_componente) values (?, ?, ?, ?, ?);";
+                            		
+                            		col1Value = JOptionPane.showInputDialog(WECApp.this, "Inserisci valore per il codice motore:");
+                            		col2Value = JOptionPane.showInputDialog(WECApp.this, "Inserisci valore per il tipo:");
+                            		col3Value = JOptionPane.showInputDialog(WECApp.this, "Inserisci valore per la cilindrata:");
+                            		col4Value = JOptionPane.showInputDialog(WECApp.this, "Inserisci valore per i cilindri:");
+                            		
+                            		try (PreparedStatement preparedStatement2 = connection.prepareStatement(query)) {
+                        				preparedStatement2.setString(1, col1Value);
+                        				preparedStatement2.setString(2, col2Value);
+                        				preparedStatement2.setString(3, col3Value);
+                        				preparedStatement2.setString(4, col4Value);
+                        				preparedStatement2.setString(5, typeCode.get(type.indexOf("motore")));
+                        				preparedStatement2.executeUpdate();
+                        				resultArea.setText("Inserimento motore eseguito con successo!");
+                        			}
+                            	}
+                            	if(type.contains("telaio")) {
+                            		query = "insert into telaio (codice_telaio, peso, materiale, codice_componente) values (?, ?, ?, ?);";
+                            		
+                            		col1Value = JOptionPane.showInputDialog(WECApp.this, "Inserisci valore per il codice telaio:");
+                            		col2Value = JOptionPane.showInputDialog(WECApp.this, "Inserisci valore per il peso:");
+                            		col3Value = JOptionPane.showInputDialog(WECApp.this, "Inserisci valore per il materiale:");
+                            		
+                            		try (PreparedStatement preparedStatement2 = connection.prepareStatement(query)) {
+                        				preparedStatement2.setString(1, col1Value);
+                        				preparedStatement2.setString(2, col2Value);
+                        				preparedStatement2.setString(3, col3Value);
+                        				preparedStatement2.setString(5, typeCode.get(type.indexOf("telaio")));
+                        				preparedStatement2.executeUpdate();
+                        				resultArea.setText("Inserimento telaio eseguito con successo!");
+                        			}
+                            	}
+                            	if(type.contains("cambio")) {
+                            		query = "insert into cambio (codice_cambio, marcia, codice_componente) values (?, ?, ?);";
+                            		
+                            		col1Value = JOptionPane.showInputDialog(WECApp.this, "Inserisci valore per il codice cambio:");
+                            		col2Value = JOptionPane.showInputDialog(WECApp.this, "Inserisci valore per la marcia:");
+                            		
+                            		try (PreparedStatement preparedStatement2 = connection.prepareStatement(query)) {
+                        				preparedStatement2.setString(1, col1Value);
+                        				preparedStatement2.setString(2, col2Value);
+                        				preparedStatement2.setString(5, typeCode.get(type.indexOf("cambio")));
+                        				preparedStatement2.executeUpdate();
+                        				resultArea.setText("Inserimento cambio eseguito con successo!");
+                        			}
                             	}
                             }
                             else {
@@ -194,24 +236,25 @@ public class WECApp extends JFrame {
                     	}
                         break;
                         
-                    case "select count(*) from vettura where numero_di_gara = ?;":
+                    case 3:
+                    	query = "select count(*) from vettura where numero_di_gara = ?;";
                     	newValue = JOptionPane.showInputDialog(WECApp.this, "Inserisci il numero di gara della vettura:");
                     	
                     	try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
                     		preparedStatement.setString(1, newValue);
                     		resultSet = preparedStatement.executeQuery();
-                    		if(handleResultSet(resultSet, "count")) {
+                    		if(handleResultSet(resultSet, "count") == 1) {
                     			newValue2 = JOptionPane.showInputDialog(WECApp.this, "Inserisci il tipo di pilota [pro, am, gd]");
                     			
                     			if(newValue2.equals("gd")) {
-                    				query2 = "select count(*) from vettura as v inner join pilota as p on v.numero_di_gara = p.numero_vettura where v.numero_di_gara = " + newValue + " and not exists (select pil.codice_pilota from vettura as ve inner join pilota as pil on ve.numero_di_gara = pil.numero_vettura inner join gentleman_driver on pil.codice_pilota = gentleman_driver.codice_pilota  where v.numero_di_gara = ve.numero_di_gara and p.codice_pilota = pil.codice_pilota);";
-                    				resultSet = statement.executeQuery(query2);
-                    				if(!handleResultSet(resultSet, "count")) {
+                    				query = "select count(*) from vettura as v inner join pilota as p on v.numero_di_gara = p.numero_vettura where v.numero_di_gara = \"" + newValue + "\" and not exists (select pil.codice_pilota from vettura as ve inner join pilota as pil on ve.numero_di_gara = pil.numero_vettura inner join gentleman_driver on pil.codice_pilota = gentleman_driver.codice_pilota  where v.numero_di_gara = ve.numero_di_gara and p.codice_pilota = pil.codice_pilota);";
+                    				resultSet = statement.executeQuery(query);
+                    				if(handleResultSet(resultSet, "count") == 0) {
                     					JOptionPane.showMessageDialog(WECApp.this, "Vincolo violato [Almeno un pilota non gentleman driver nell'equipaggio]", "Errore", JOptionPane.ERROR_MESSAGE);
                     					break;
                     				}
                     			}
-                    			query2 = "insert into pilota (codice_pilota, nome, cognome, data_di_nascita, nazionalità, licenze, data_prima_licenza, numero_vettura) values (?, ?, ?, ?, ?, ?, ?, ?)";
+                    			query = "insert into pilota (codice_pilota, nome, cognome, data_di_nascita, nazionalità, licenze, data_prima_licenza, numero_vettura) values (?, ?, ?, ?, ?, ?, ?, ?)";
                     				
                     			col1Value = JOptionPane.showInputDialog(WECApp.this, "Inserisci valore per il codice pilota:");
                                 col2Value = JOptionPane.showInputDialog(WECApp.this, "Inserisci valore per il nome:");
@@ -229,7 +272,7 @@ public class WECApp extends JFrame {
                                 }
                                 col7Value = JOptionPane.showInputDialog(WECApp.this, "Inserisci valore per la data della prima licenza [yyyy-mm-dd]:");
                                     
-                                try (PreparedStatement preparedStatement2 = connection.prepareStatement(query2)) {
+                                try (PreparedStatement preparedStatement2 = connection.prepareStatement(query)) {
                                 	preparedStatement2.setString(1, col1Value);
                                 	preparedStatement2.setString(2, col2Value);
                                 	preparedStatement2.setString(3, col3Value);
@@ -239,34 +282,154 @@ public class WECApp extends JFrame {
                                 	preparedStatement2.setString(7, col7Value);
                                 	preparedStatement2.setString(8, newValue);
                                 	preparedStatement2.executeUpdate();
-                            		resultArea.setText("Inserimento eseguito con successo!");
+                                	resultArea.setText("Inserimento pilota eseguito con successo!");
                     			}
                                 
                                 if(newValue2.equals("gd")) {
-                                	query2 = "insert into gentleman_driver (codice_gentleman, quota, finanziamenti, codice_pilota ) values (?, ?, ?, ?);";
+                                	query = "insert into gentleman_driver (codice_gentleman, quota, finanziamenti, codice_pilota ) values (?, ?, ?, ?);";
                                 	
                                 	col2Value = JOptionPane.showInputDialog(WECApp.this, "Inserisci valore per il codice gentleman:");
                                 	col3Value = JOptionPane.showInputDialog(WECApp.this, "Inserisci valore per la quota:");
                                 	col4Value = JOptionPane.showInputDialog(WECApp.this, "Inserisci valore per i finanzimenti:");
                                 	
-                                	try (PreparedStatement preparedStatement2 = connection.prepareStatement(query2)) {
+                                	try (PreparedStatement preparedStatement2 = connection.prepareStatement(query)) {
                                     	preparedStatement2.setString(1, col2Value);
                                     	preparedStatement2.setString(2, col3Value);
                                     	preparedStatement2.setString(3, col4Value);
                                     	preparedStatement2.setString(4, col1Value);
                                     	preparedStatement2.executeUpdate();
+                                    	query = "update scuderia inner join vettura on scuderia.nome = vettura.nome_scuderia inner join pilota on vettura.numero_di_gara = pilota.numero_vettura inner join gentleman_driver on pilota.codice_pilota = gentleman_driver.codice_pilota set scuderia.finanziamenti_totali = finanziamenti_totali + \"" + col4Value + "\" where gentleman_driver.codice_gentleman = \"" + col2Value + "\";";
+                                    	statement.executeUpdate(query);
+                                    	resultArea.setText("Inserimento gentleman driver e aggiornamento scuderia eseguito con successo!");
                         			}
-                                	
-                                	query2 = "update scuderia inner join vettura on scuderia.nome = vettura.nome_scuderia inner join pilota on vettura.numero_di_gara = pilota.numero_vettura inner join gentleman_driver on pilota.codice_pilota = gentleman_driver.codice_pilota set scuderia.finanziamenti_totali = finanziamenti_totali + " + col4Value + " where gentleman_driver.codice_gentleman = " + col2Value + ";";
-                                	statement.executeUpdate(query2);
-                                	resultArea.setText("Inserimento e aggiornamento eseguito con successo!");
                                 }
                     		}
                     		else {
                     			JOptionPane.showMessageDialog(WECApp.this, "Vincolo d'integrità violato", "Errore", JOptionPane.ERROR_MESSAGE);
                     		}
                     	}
-
+                    	break;
+                    	
+                    case 4:
+                    	query = "select count(*) from gentleman_driver where codice_gentleman = ?;";
+                    	newValue = JOptionPane.showInputDialog(WECApp.this, "Inserisci il codice gentleman del gentleman driver:");
+                    	
+                    	try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                    		preparedStatement.setString(1, newValue);
+                    		resultSet = preparedStatement.executeQuery();
+                    		if(handleResultSet(resultSet, "count") == 1) {
+                    			query = "update gentleman_driver set quota = quota + ?, finanziamenti = finanziamenti + 1 where codice_gentleman = ?;";
+                    			
+                    			col1Value = JOptionPane.showInputDialog(WECApp.this, "Inserisci valore per la quota da aggiungere:");
+                    			
+                    			try (PreparedStatement preparedStatement2 = connection.prepareStatement(query)) {
+                                	preparedStatement2.setString(1, col1Value);
+                                	preparedStatement2.setString(2, newValue);
+                                	preparedStatement2.executeUpdate();
+                                	query = "update gentleman_driver inner join pilota on gentleman_driver.codice_pilota = pilota.codice_pilota inner join vettura on pilota.numero_vettura = vettura.numero_di_gara inner join scuderia on vettura.nome_scuderia = scuderia.nome set scuderia.finanziamenti_totali = scuderia.finanziamenti_totali + 1 where codice_gentleman = \"" + newValue + "\" and gentleman_driver.codice_pilota = pilota.codice_pilota and pilota.numero_vettura = vettura.numero_di_gara and vettura.nome_scuderia = scuderia.nome;";
+                                	statement.executeQuery(query);
+                                	resultArea.setText("Aggiornamento gentleman driver e scuderia eseguito con successo!");
+                    			}
+                    		}
+                    		else {
+                    			JOptionPane.showMessageDialog(WECApp.this, "Gentleman driver non trovato", "Errore", JOptionPane.ERROR_MESSAGE);
+                    		}
+                    	}
+                    	break;
+                    	
+                    case 5:
+                    	query = "select count(*) from vettura where numero_di_gara = ?;";
+                    	newValue = JOptionPane.showInputDialog(WECApp.this, "Inserisci il numero di gara della vettura:");
+                    	
+                    	try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                    		preparedStatement.setString(1, newValue);
+                    		resultSet = preparedStatement.executeQuery();
+                    		if(handleResultSet(resultSet, "count") == 1) {
+                    			query = "select count(*) from gara where nome = ?;";
+                    			
+                    			col1Value = JOptionPane.showInputDialog(WECApp.this, "Inserisci il nome della gara:");
+                    			
+                    			try (PreparedStatement preparedStatement2 = connection.prepareStatement(query)) {
+                            		preparedStatement2.setString(1, col1Value);
+                            		resultSet = preparedStatement2.executeQuery();
+                            		if(handleResultSet(resultSet, "count") == 1) {
+                            			query = "select count(*) as iscrizioni from iscrizione where numero_vettura = \"" + newValue + "\" and nome_gara = \"" + col1Value + "\";";
+                            			
+                            			try (PreparedStatement preparedStatement3 = connection.prepareStatement(query)) {
+                                    		resultSet = preparedStatement3.executeQuery();
+                                    		if(handleResultSet(resultSet, "count") == 1) {
+                                    			query = "insert into iscrizione (numero_vettura, nome_gara, punteggio, stato_fine_gara) values (\"" + newValue + "\", \"" + col1Value + "\", -1, NonTerminato);";
+                                    			
+                                    			try (PreparedStatement preparedStatement4 = connection.prepareStatement(query)) {
+                                            		resultSet = preparedStatement4.executeQuery();
+                                            		resultArea.setText("Inserimento iscrizione eseguito con successo!");
+                                    			}
+                                    		}
+                                    		else {
+                                    			JOptionPane.showMessageDialog(WECApp.this, "Iscrizione già effettuata", "Errore", JOptionPane.ERROR_MESSAGE);
+                                    		}
+                            			}
+                            		}
+                            		else {
+                            			JOptionPane.showMessageDialog(WECApp.this, "Gara non trovata", "Errore", JOptionPane.ERROR_MESSAGE);
+                            		}
+                    			}
+                    		}
+                    		else {
+                    			JOptionPane.showMessageDialog(WECApp.this, "Vettura non trovata", "Errore", JOptionPane.ERROR_MESSAGE);
+                    		}
+                    	}
+                    	break;
+                    	
+                    case 6:
+                    	query = "select count(*) from iscrizione where nome_gara = ?;";
+                    	newValue = JOptionPane.showInputDialog(WECApp.this, "Inserisci il nome di gara:");
+                    	
+                    	try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                    		preparedStatement.setString(1, newValue);
+                    		resultSet = preparedStatement.executeQuery();
+                    		int n = handleResultSet(resultSet, "cycle");
+                    		if(n >= 1) {
+                    			String query2 = "select numero_vettura from iscrizione where nome_gara = \"" + newValue + "\";";
+                            	ResultSet resultSet2 = statement.executeQuery(query2);
+                            	String[] numeroVettura = extractStringResultSet(resultSet2).split(" ");
+                        			
+                            	for(int i = 0; i < n; i++) {
+                        			query = "update iscrizione set punteggio = ?, stato_fine_gara = ? where nome_gara = \"" + newValue + "\" and numero_vettura = \"" + numeroVettura[i] + "\";";
+                        				
+                        			col1Value = JOptionPane.showInputDialog(WECApp.this, "Inserisci valore per il punteggio [0 - 25] [" + numeroVettura[i] + "]:");
+                        			col2Value = JOptionPane.showInputDialog(WECApp.this, "Inserisci valore per lo stato fine gara [terminato, incidente, guasto meccanico, squalifica] [" + numeroVettura[i] + "]:");
+                        			
+                        			try (PreparedStatement preparedStatement3 = connection.prepareStatement(query)) {
+                        				preparedStatement3.setString(1, col1Value);
+                        				preparedStatement3.setString(2, col2Value);
+                        				preparedStatement3.executeUpdate();
+                        				resultArea.setText("Aggiornamento iscrizione [" + numeroVettura[i] + "] eseguito con successo!");
+                        			}
+                        		}
+                    		}
+                        	else {
+                        		JOptionPane.showMessageDialog(WECApp.this, "Gara non trovata", "Errore", JOptionPane.ERROR_MESSAGE);
+                        	}
+                    	}
+                    	break;
+                    	
+                    case 7:
+                    	query = "select count(*) from composizione where numero_vettura = ?;";
+                    	newValue = JOptionPane.showInputDialog(WECApp.this, "Inserisci il numero di gara della vettura:");
+                    	
+                    	try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                    		preparedStatement.setString(1, newValue);
+                    		resultSet = preparedStatement.executeQuery();
+                    		if(handleResultSet(resultSet, "count") == 1) {
+                    			query = "select count(*) from composizione inner join componente on composizione.codice_componente = componente.codice_componente left join motore on motore.codice_componente = componente.codice_componente left join cambio on cambio.codice_componente = componente.codice_componente left join telaio on telaio.codice_componente = componente.codice_componente where numero_vettura = \"" + newValue + "\";";
+                            	resultSet = statement.executeQuery(query);
+                        		resultArea.setText("Ci sono attualmente: " + handleResultSet(resultSet, "cycle") + " componenti nella vettura: " + newValue);
+                    		}
+                    		else {
+                        		JOptionPane.showMessageDialog(WECApp.this, "Vettura non trovata", "Errore", JOptionPane.ERROR_MESSAGE);
+                        	}
+                    	}
                     default:
                         // Gestione per altre query personalizzate
                         break;
@@ -279,7 +442,7 @@ public class WECApp extends JFrame {
         }
     }
     
-    private boolean handleResultSet(ResultSet resultSet, String op) throws SQLException {
+    private int handleResultSet(ResultSet resultSet, String op) throws SQLException {
     	int n = 0;
     	
     	switch(op) {
@@ -288,14 +451,30 @@ public class WECApp extends JFrame {
 				n = resultSet.getInt(1);
 			}
 			if(n >= 1)
-				return true;
+				return 1;
 			else
-				return false;
+				return 0;
  
+		case "cycle":
+			while(resultSet.next()) {
+				n = resultSet.getInt(1);
+			}
+			
+			return n;
+			
 		default:
 			break;
 		}
-    	return false;
+    	return 0;
+    }
+    
+    private String extractStringResultSet(ResultSet resultSet) throws SQLException {
+    	StringBuilder resultText = new StringBuilder();
+    	while (resultSet.next()) {
+            resultText.append(resultSet.getString(1)).append(" ");
+        }
+    	
+    	return resultText.toString().trim();
     }
 
     private void displayResultSet(ResultSet resultSet) throws SQLException {
