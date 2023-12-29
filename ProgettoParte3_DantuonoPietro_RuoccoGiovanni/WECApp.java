@@ -483,16 +483,14 @@ public class WECApp extends JFrame {
 
         StringBuilder resultText = new StringBuilder();
 
-        // Visualizza l'intestazione delle colonne
         for (int i = 1; i <= columnCount; i++) {
-            resultText.append(metaData.getColumnName(i)).append("\t\t");
+            resultText.append(String.format("%-25s", metaData.getColumnName(i))).append("\t");
         }
         resultText.append("\n");
 
-        // Visualizza i dati
         while (resultSet.next()) {
             for (int i = 1; i <= columnCount; i++) {
-                resultText.append(resultSet.getString(i)).append("\t\t");
+                resultText.append(String.format("%-25s", resultSet.getString(i))).append("\t");
             }
             resultText.append("\n");
         }
@@ -501,7 +499,6 @@ public class WECApp extends JFrame {
     }
 
     public static void main(String[] args) {
-        // Esegui l'applicazione su un thread separato per evitare blocchi dell'interfaccia utente
         SwingUtilities.invokeLater(() -> new WECApp());
     }
 }
