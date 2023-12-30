@@ -121,6 +121,7 @@ public class WECApp extends JFrame {
 
                     case 2:
                     	query = "select count(*) from scuderia where nome = ?;";
+                    	java.util.List<String> nameValue = new ArrayList<>();
                         newValue = JOptionPane.showInputDialog(WECApp.this, "Inserisci il nome della scuderia:");
                         
                         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -141,41 +142,68 @@ public class WECApp extends JFrame {
                             	}
                             	
                             	java.util.List<String> type = new ArrayList<>();
+                            	String typeBuffer = "";
                             	java.util.List<String> typeCode = new ArrayList<>();
+                            	
                             	col2Value = JOptionPane.showInputDialog(WECApp.this, "Inserisci valore per nuovi componenti [0, 1, 2, 3]:");
                             	int count = 0;
                             	
+                            	int count2 = 0;
+                            	java.util.List<String> typeCodeExist = new ArrayList<>();
+                            	
                             	for(int k = 0; k < Integer.parseInt(col2Value); k++) {
                             		query = "select count(*) from costruttore where nome = ?;";
-                            		newValue = JOptionPane.showInputDialog(WECApp.this, "Inserisci il nome del costruttore:");
+                            		nameValue.add(JOptionPane.showInputDialog(WECApp.this, "Inserisci il nome del costruttore:"));
                             		
                             		try (PreparedStatement preparedStatement3 = connection.prepareStatement(query)) {
-                                		preparedStatement3.setString(1, newValue);
+                                		preparedStatement3.setString(1, nameValue.get(k));
                                 		resultSet = preparedStatement3.executeQuery();
                                 		if(handleResultSet(resultSet, "count") == 1) {
                                 			query = "insert into componente (codice_componente, costo, nome_costruttore) values (?, ?, ?);";
                                 			
-                                			type.add(JOptionPane.showInputDialog(WECApp.this, "Inserisci valore per il tipo componente [motore, telaio, cambio]:"));
+                                			typeBuffer = JOptionPane.showInputDialog(WECApp.this, "Inserisci valore per il tipo componente [motore, telaio, cambio]:");
+                                			if(type.contains(typeBuffer)) {
+                                				while(count != 0) {
+                                               		query = "delete from composizione where codice_componente = \"" + typeCode.get(count - 1) + "\";";
+                                                	statement.executeUpdate(query);
+                                                	query = "update costruttore set componenti = componenti - 1 where costruttore.nome = \"" + nameValue.get(count - 1) + "\";";
+                                                	statement.executeUpdate(query);
+                                                	
+                                                	query = "delete from componente where codice_componente = \"" + typeCode.get(count - 1) + "\";";
+                                                	statement.executeUpdate(query);
+                                                	count--;
+                                                }
+                                                query = "delete from vettura where numero_di_gara = \"" + col1Value + "\";";
+                                                statement.executeUpdate(query);
+                                                JOptionPane.showMessageDialog(WECApp.this, "Vincolo d'integrità violato [Tipo componente già in uso]", "Errore", JOptionPane.ERROR_MESSAGE);
+                                                k = 3;
+                                                break;
+                                			}
+                                			
+                                			type.add(typeBuffer);
                                 			typeCode.add(JOptionPane.showInputDialog(WECApp.this, "Inserisci valore per il codice componente nuovo:"));
                                 			col4Value = JOptionPane.showInputDialog(WECApp.this, "Inserisci valore per il costo:");
                                 			
                                 			try (PreparedStatement preparedStatement4 = connection.prepareStatement(query)) {
                                         		preparedStatement4.setString(1, typeCode.get(k));
                                         		preparedStatement4.setString(2, col4Value);
-                                        		preparedStatement4.setString(3, newValue);
+                                        		preparedStatement4.setString(3, nameValue.get(k));
                                         		preparedStatement4.executeUpdate();
+                                        		
                                         		resultArea.setText("Inserimento componente eseguito con successo!");
                                         	} catch (SQLException ex) {
                                                 
-                                                query = "delete from vettura where numero_di_gara = \"" + col1Value + "\";";
-                                                statement.executeUpdate(query);
                                                 while(count != 0) {
-                                                	query = "delete from componente where codice_componente = \"" + typeCode.get(count - 1) + "\";";
-                                                	statement.executeUpdate(query);
                                                 	query = "delete from composizione where codice_componente = \"" + typeCode.get(count - 1) + "\";";
                                                 	statement.executeUpdate(query);
+                                                	query = "delete from componente where codice_componente = \"" + typeCode.get(count - 1) + "\";";
+                                                	statement.executeUpdate(query);
+                                                	query = "update costruttore set componenti = componenti - 1 where costruttore.nome = \"" + nameValue.get(count) + "\";";
+                                            		statement.executeUpdate(query);
                                                 	count--;
                                                 }
+                                                query = "delete from vettura where numero_di_gara = \"" + col1Value + "\";";
+                                                statement.executeUpdate(query);
                                                 JOptionPane.showMessageDialog(WECApp.this, "Errore nell'esecuzione della query", "Errore", JOptionPane.ERROR_MESSAGE);
                                             }
                                 			query = "insert into composizione (numero_vettura, data_installazione, codice_componente) values (?, ?, ?);";
@@ -186,28 +214,36 @@ public class WECApp extends JFrame {
                                 				preparedStatement5.setString(2, col4Value);
                                 				preparedStatement5.setString(3, typeCode.get(k));
                                 				preparedStatement5.executeUpdate();
-                                				resultArea.setText("Inserimento composizione del componente nuovo eseguito con successo!");
+                                				query = "update costruttore set componenti = componenti + 1 where costruttore.nome = \"" + nameValue.get(k) + "\";";
+                                        		statement.executeUpdate(query);
+                                        		resultArea.setText("Inserimento composizione del componente nuovo e aggiornamento costruttore eseguito con successo!");
                                 				count++;
+                                				typeBuffer = "";
                                 			} catch (SQLException ex) {
                                                 
-                                                query = "delete from vettura where numero_di_gara = \"" + col1Value + "\";";
-                                                statement.executeUpdate(query);
                                                 while(count != 0) {
+                                               		query = "delete from composizione where codice_componente = \"" + typeCode.get(count - 1) + "\";";
+                                                	statement.executeUpdate(query);
+                                                	query = "update costruttore set componenti = componenti - 1 where costruttore.nome = \"" + nameValue.get(count - 1) + "\";";
+                                                	statement.executeUpdate(query);
+                                                		
                                                 	query = "delete from componente where codice_componente = \"" + typeCode.get(count - 1) + "\";";
                                                 	statement.executeUpdate(query);
-                                                	if(count != 1 && count != 0) {
-                                                		query = "delete from composizione where codice_componente = \"" + typeCode.get(count - 2) + "\";";
-                                                		statement.executeUpdate(query);
-                                                	}
+                                                	count--;
                                                 }
+                                                query = "delete from vettura where numero_di_gara = \"" + col1Value + "\";";
+                                                statement.executeUpdate(query);
                                                 JOptionPane.showMessageDialog(WECApp.this, "Errore nell'esecuzione della query", "Errore", JOptionPane.ERROR_MESSAGE);
                                 			}
                                 		}
                                 		else {
-                                        	JOptionPane.showMessageDialog(WECApp.this, "Vincolo d'integrità violato", "Errore", JOptionPane.ERROR_MESSAGE);
+                                        	JOptionPane.showMessageDialog(WECApp.this, "Vincolo d'integrità violato [Non esiste il costruttore]", "Errore", JOptionPane.ERROR_MESSAGE);
                                         	break;
                                         }	
                             		}
+                            	}
+                            	if(type.contains(typeBuffer)) {
+                            		break;
                             	}
                             
                             	if(type.contains("motore")) {
@@ -228,14 +264,32 @@ public class WECApp extends JFrame {
                         				resultArea.setText("Inserimento motore eseguito con successo!");
                         			} catch (SQLException ex) {
                                         
-                                        query = "delete from vettura where numero_di_gara = \"" + col1Value + "\";";
-                                        statement.executeUpdate(query);
-                                        while(count != 0) {
-                                        	query = "delete from componente where codice_componente = \"" + typeCode.get(count - 1) + "\";";
-                                        	statement.executeUpdate(query);
-                                        	query = "delete from composizione where codice_componente = \"" + typeCode.get(count - 1) + "\";";
+                        				if(type.contains("motore")) {
+                                        	query = "delete from motore where codice_componente = \"" + typeCode.get(type.indexOf("motore")) + "\";";
                                         	statement.executeUpdate(query);
                                         }
+                                        if(type.contains("telaio")) {
+                                        	query = "delete from telaio where codice_componente = \"" + typeCode.get(type.indexOf("telaio")) + "\";";
+                                        	statement.executeUpdate(query);
+                                        }
+                                        if(type.contains("cambio")) {
+                                        	query = "delete from cambio where codice_componente = \"" + typeCode.get(type.indexOf("cambio")) + "\";";
+                                        	statement.executeUpdate(query);
+                                        }
+                                        
+                                        while(count != 0) {
+                                        	query = "delete from composizione where codice_componente = \"" + typeCode.get(count - 1) + "\";";
+                                        	statement.executeUpdate(query);
+                                        	query = "delete from componente where codice_componente = \"" + typeCode.get(count - 1) + "\";";
+                                        	statement.executeUpdate(query);
+                                        	query = "update costruttore set componenti = componenti - 1 where costruttore.nome = \"" + nameValue.get(count - 1) + "\";";
+                                    		statement.executeUpdate(query);
+                                        	count--;
+                                        }
+                                        
+                                        query = "delete from vettura where numero_di_gara = \"" + col1Value + "\";";
+                                        statement.executeUpdate(query);
+                                        
                                         JOptionPane.showMessageDialog(WECApp.this, "Errore nell'esecuzione della query", "Errore", JOptionPane.ERROR_MESSAGE);
                         			}
                             	}
@@ -250,22 +304,37 @@ public class WECApp extends JFrame {
                         				preparedStatement2.setString(1, col5Value);
                         				preparedStatement2.setString(2, col6Value);
                         				preparedStatement2.setString(3, col3Value);
-                        				preparedStatement2.setString(5, typeCode.get(type.indexOf("telaio")));
+                        				preparedStatement2.setString(4, typeCode.get(type.indexOf("telaio")));
                         				preparedStatement2.executeUpdate();
                         				resultArea.setText("Inserimento telaio eseguito con successo!");
                         			} catch (SQLException ex) {
-                                        query = "delete from vettura where numero_di_gara = \"" + col1Value + "\";";
-                                        statement.executeUpdate(query);
-                                        while(count != 0) {
-                                        	query = "delete from componente where codice_componente = \"" + typeCode.get(count - 1) + "\";";
-                                        	statement.executeUpdate(query);
-                                        	query = "delete from composizione where codice_componente = \"" + typeCode.get(count - 1) + "\";";
-                                        	statement.executeUpdate(query);
-                                        }
-                                        if(type.contains("motore")) {
+                                        
+                        				if(type.contains("motore")) {
                                         	query = "delete from motore where codice_componente = \"" + typeCode.get(type.indexOf("motore")) + "\";";
                                         	statement.executeUpdate(query);
                                         }
+                                        if(type.contains("telaio")) {
+                                        	query = "delete from telaio where codice_componente = \"" + typeCode.get(type.indexOf("telaio")) + "\";";
+                                        	statement.executeUpdate(query);
+                                        }
+                                        if(type.contains("cambio")) {
+                                        	query = "delete from cambio where codice_componente = \"" + typeCode.get(type.indexOf("cambio")) + "\";";
+                                        	statement.executeUpdate(query);
+                                        }
+                                        
+                                        while(count != 0) {
+                                        	query = "delete from composizione where codice_componente = \"" + typeCode.get(count - 1) + "\";";
+                                        	statement.executeUpdate(query);
+                                        	query = "delete from componente where codice_componente = \"" + typeCode.get(count - 1) + "\";";
+                                        	statement.executeUpdate(query);
+                                        	query = "update costruttore set componenti = componenti - 1 where costruttore.nome = \"" + nameValue.get(count) + "\";";
+                                    		statement.executeUpdate(query);
+                                        	count--;
+                                        }
+                                        
+                                        query = "delete from vettura where numero_di_gara = \"" + col1Value + "\";";
+                                        statement.executeUpdate(query);
+                                        
                                         JOptionPane.showMessageDialog(WECApp.this, "Errore nell'esecuzione della query", "Errore", JOptionPane.ERROR_MESSAGE);
                         			}
                             	}
@@ -278,19 +347,12 @@ public class WECApp extends JFrame {
                             		try (PreparedStatement preparedStatement2 = connection.prepareStatement(query)) {
                         				preparedStatement2.setString(1, col5Value);
                         				preparedStatement2.setString(2, col6Value);
-                        				preparedStatement2.setString(5, typeCode.get(type.indexOf("cambio")));
+                        				preparedStatement2.setString(3, typeCode.get(type.indexOf("cambio")));
                         				preparedStatement2.executeUpdate();
                         				resultArea.setText("Inserimento cambio eseguito con successo!");
                         			} catch (SQLException ex) {
-                                        query = "delete from vettura where numero_di_gara = \"" + col1Value + "\";";
-                                        statement.executeUpdate(query);
-                                        while(count != 0) {
-                                        	query = "delete from componente where codice_componente = \"" + typeCode.get(count - 1) + "\";";
-                                        	statement.executeUpdate(query);
-                                        	query = "delete from composizione where codice_componente = \"" + typeCode.get(count - 1) + "\";";
-                                        	statement.executeUpdate(query);
-                                        }
-                                        if(type.contains("motore")) {
+                        				
+                        				if(type.contains("motore")) {
                                         	query = "delete from motore where codice_componente = \"" + typeCode.get(type.indexOf("motore")) + "\";";
                                         	statement.executeUpdate(query);
                                         }
@@ -298,15 +360,35 @@ public class WECApp extends JFrame {
                                         	query = "delete from telaio where codice_componente = \"" + typeCode.get(type.indexOf("telaio")) + "\";";
                                         	statement.executeUpdate(query);
                                         }
+                                        if(type.contains("cambio")) {
+                                        	query = "delete from cambio where codice_componente = \"" + typeCode.get(type.indexOf("cambio")) + "\";";
+                                        	statement.executeUpdate(query);
+                                        }
+                                        
+                                        while(count != 0) {
+                                        	query = "delete from composizione where codice_componente = \"" + typeCode.get(count - 1) + "\";";
+                                        	statement.executeUpdate(query);
+                                        	query = "delete from componente where codice_componente = \"" + typeCode.get(count - 1) + "\";";
+                                        	statement.executeUpdate(query);
+                                        	query = "update costruttore set componenti = componenti - 1 where costruttore.nome = \"" + nameValue.get(count - 1) + "\";";
+                                    		statement.executeUpdate(query);
+                                        	count--;
+                                        }
+                                        
+                                        query = "delete from vettura where numero_di_gara = \"" + col1Value + "\";";
+                                        statement.executeUpdate(query);
+                                        
                                         JOptionPane.showMessageDialog(WECApp.this, "Errore nell'esecuzione della query", "Errore", JOptionPane.ERROR_MESSAGE);
                         			}
                             	}
-                            	int count2 = 0;
-                            	java.util.List<String> typeCodeExist = new ArrayList<>();
+                            	
                             	try {
                             		int j = 0;
                             		String queryType;
                             		String typeFound = "";
+                            		String query2 = "";
+                            		String query3 = "";
+                            		String query4 = "";
                             		
                             		for(int k = 3; k > Integer.parseInt(col2Value); k--) {
                                 		query = "insert into composizione (numero_vettura, data_installazione, codice_componente) values (\"" + col1Value + "\", ?, ?);";
@@ -328,19 +410,13 @@ public class WECApp extends JFrame {
                                 			typeFound = "cambio";
                                 		}
                                 		
-                                		String query2 = "select count(*) from motore inner join componente on motore.codice_componente = componente.codice_componente left join composizione on componente.codice_componente = composizione.codice_componente where composizione.numero_vettura = \"" + col1Value + "\";";
-                                		String query3 = "select count(*) from telaio inner join componente on telaio.codice_componente = componente.codice_componente left join composizione on componente.codice_componente = composizione.codice_componente where composizione.numero_vettura = \"" + col1Value + "\";";
-                                		String query4 = "select count(*) from cambio inner join componente on cambio.codice_componente = componente.codice_componente left join composizione on componente.codice_componente = composizione.codice_componente where composizione.numero_vettura = \"" + col1Value + "\";";
+                                		query2 = "select count(*) from motore inner join componente on motore.codice_componente = componente.codice_componente left join composizione on componente.codice_componente = composizione.codice_componente where composizione.numero_vettura = \"" + col1Value + "\";";
+                                		query3 = "select count(*) from telaio inner join componente on telaio.codice_componente = componente.codice_componente left join composizione on componente.codice_componente = composizione.codice_componente where composizione.numero_vettura = \"" + col1Value + "\";";
+                                		query4 = "select count(*) from cambio inner join componente on cambio.codice_componente = componente.codice_componente left join composizione on componente.codice_componente = composizione.codice_componente where composizione.numero_vettura = \"" + col1Value + "\";";
                                 		
                                 		if((typeFound.equals("motore") && handleResultSet(statement.executeQuery(query2), "count") >= 1) || (typeFound.equals("telaio") && handleResultSet(statement.executeQuery(query3), "count") >= 1) || (typeFound.equals("cambio") && handleResultSet(statement.executeQuery(query4), "count") >= 1)) {
                                 			
-                                			while(count2 != 0) {
-                                            	query = "delete from composizione where codice_componente = \"" + typeCodeExist.get(count2 - 1) + "\";";
-                                            	statement.executeUpdate(query);
-                                            	count2--;
-                                            }
-                                            
-                                            if(type.contains("motore")) {
+                                			if(type.contains("motore")) {
                                             	query = "delete from motore where codice_componente = \"" + typeCode.get(type.indexOf("motore")) + "\";";
                                             	statement.executeUpdate(query);
                                             }
@@ -352,39 +428,50 @@ public class WECApp extends JFrame {
                                             	query = "delete from cambio where codice_componente = \"" + typeCode.get(type.indexOf("cambio")) + "\";";
                                             	statement.executeUpdate(query);
                                             }
+                                			
+                                			while(count2 != 0) {
+                                            	query = "delete from composizione where codice_componente = \"" + typeCodeExist.get(count2 - 1) + "\";";
+                                            	statement.executeUpdate(query);
+                                            	query = "update costruttore inner join componente on costruttore.nome = componente.nome_costruttore set componenti = componenti - 1 where componente.codice_componente = \"" + typeCodeExist.get(count2 - 1) + "\";";
+                                            	statement.executeUpdate(query);
+                                            	count2--;
+                                            }
                                             
                                             while(count != 0) {
-                                            	query = "delete from componente where codice_componente = \"" + typeCode.get(count - 1) + "\";";
-                                            	statement.executeUpdate(query);
                                             	query = "delete from composizione where codice_componente = \"" + typeCode.get(count - 1) + "\";";
                                             	statement.executeUpdate(query);
+                                            	query = "delete from componente where codice_componente = \"" + typeCode.get(count - 1) + "\";";
+                                            	statement.executeUpdate(query);
+                                            	query = "update costruttore set componenti = componenti - 1 where costruttore.nome = \"" + nameValue.get(count - 1) + "\";";
+                                        		statement.executeUpdate(query);
                                             	count--;
                                             }
                                             
                                             query = "delete from vettura where numero_di_gara = \"" + col1Value + "\";";
                                             statement.executeUpdate(query);
                                             
-                                			JOptionPane.showMessageDialog(WECApp.this, "Tipo di componente già in uso", "Errore", JOptionPane.ERROR_MESSAGE);
+                                			JOptionPane.showMessageDialog(WECApp.this, "Vincolo d'integrità violato [Tipo di componente già in uso]", "Errore", JOptionPane.ERROR_MESSAGE);
                                 			k = 0;
                                 			break;
                                 		}
+                                		typeFound = "";
                                 		PreparedStatement preparedStatement2 = connection.prepareStatement(query);
                                     	preparedStatement2.setString(1, col3Value);
                                    		preparedStatement2.setString(2, typeCodeExist.get(j));
                                    		preparedStatement2.executeUpdate();
-                                   		resultArea.setText("Inserimento composizione del componente esistente eseguito con successo!");
+                                   		query = "update costruttore inner join componente on costruttore.nome = componente.nome_costruttore set componenti = componenti + 1 where componente.codice_componente = \"" + typeCodeExist.get(j) + "\";";
+                                		statement.executeUpdate(query);
+                                   		resultArea.setText("Inserimento composizione del componente esistente e aggiornamento costruttore eseguito con successo!");
                                    		count2++;
                                    		j++;
                             		}
+                            		if((typeFound.equals("motore") && handleResultSet(statement.executeQuery(query2), "count") >= 1) || (typeFound.equals("telaio") && handleResultSet(statement.executeQuery(query3), "count") >= 1) || (typeFound.equals("cambio") && handleResultSet(statement.executeQuery(query4), "count") >= 1)) {
+                            			break;
+                            		}
+                            		
                             	} catch (SQLException ex) {
                             		
-                            		while(count2 != 0) {
-                                    	query = "delete from composizione where codice_componente = \"" + typeCodeExist.get(count2 - 1) + "\";";
-                                    	statement.executeUpdate(query);
-                                    	count2--;
-                                    }
-                                    
-                                    if(type.contains("motore")) {
+                            		if(type.contains("motore")) {
                                     	query = "delete from motore where codice_componente = \"" + typeCode.get(type.indexOf("motore")) + "\";";
                                     	statement.executeUpdate(query);
                                     }
@@ -396,23 +483,33 @@ public class WECApp extends JFrame {
                                     	query = "delete from cambio where codice_componente = \"" + typeCode.get(type.indexOf("cambio")) + "\";";
                                     	statement.executeUpdate(query);
                                     }
+                            		
+                            		while(count2 != 0) {
+                                    	query = "delete from composizione where codice_componente = \"" + typeCodeExist.get(count2 - 1) + "\";";
+                                    	statement.executeUpdate(query);
+                                    	query = "update costruttore inner join componente on costruttore.nome = componente.nome_costruttore set componenti = componenti - 1 where componente.codice_componente = \"" + typeCodeExist.get(count2 - 1) + "\";";
+                                    	statement.executeUpdate(query);
+                                    	count2--;
+                                    }
                                     
                                     while(count != 0) {
                                     	query = "delete from componente where codice_componente = \"" + typeCode.get(count - 1) + "\";";
                                     	statement.executeUpdate(query);
                                     	query = "delete from composizione where codice_componente = \"" + typeCode.get(count - 1) + "\";";
                                     	statement.executeUpdate(query);
+                                    	query = "update costruttore set componenti = componenti - 1 where costruttore.nome = \"" + nameValue.get(count - 1) + "\";";
+                                		statement.executeUpdate(query);
                                     	count--;
                                     }
                                     
                                     query = "delete from vettura where numero_di_gara = \"" + col1Value + "\";";
                                     statement.executeUpdate(query);
                                     
-                        			JOptionPane.showMessageDialog(WECApp.this, "Tipo di componente già in uso", "Errore", JOptionPane.ERROR_MESSAGE);
+                        			JOptionPane.showMessageDialog(WECApp.this, "Vincolo d'integrità violato [Tipo di componente già in uso]", "Errore", JOptionPane.ERROR_MESSAGE);
                     			}
                             }
                             else {
-                            	JOptionPane.showMessageDialog(WECApp.this, "Vincolo d'integrità violato", "Errore", JOptionPane.ERROR_MESSAGE);
+                            	JOptionPane.showMessageDialog(WECApp.this, "Vincolo d'integrità violato [Non esiste quella scuderia]", "Errore", JOptionPane.ERROR_MESSAGE);
                             	break;
                             }
                     	}
