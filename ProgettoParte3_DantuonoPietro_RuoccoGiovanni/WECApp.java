@@ -542,11 +542,11 @@ public class WECApp extends JFrame {
                                 col5Value = JOptionPane.showInputDialog(WECApp.this, "Inserisci valore per la nazionalità [nazione]:");
                                 col6Value = JOptionPane.showInputDialog(WECApp.this, "Inserisci valore per il numero di licenze:");
                                 if(Integer.parseInt(col6Value) > 1 && (newValue2.equals("am") || newValue2.equals("gd"))) {
-                                	JOptionPane.showMessageDialog(WECApp.this, "Vincolo violato [Un am o un gentleman driver possono avere solo una licenza]", "Errore", JOptionPane.ERROR_MESSAGE);
+                                	JOptionPane.showMessageDialog(WECApp.this, "Vincolo d'integrità violato [Un am o un gentleman driver possono avere solo una licenza]", "Errore", JOptionPane.ERROR_MESSAGE);
                                 	break;
                                 }
                                 else if(Integer.parseInt(col6Value) == 1 && newValue2.equals("pro")) {
-                                	JOptionPane.showMessageDialog(WECApp.this, "Vincolo violato [Un pro deve avere più di una licenza]", "Errore", JOptionPane.ERROR_MESSAGE);
+                                	JOptionPane.showMessageDialog(WECApp.this, "Vincolo d'integrità violato [Un pro deve avere più di una licenza]", "Errore", JOptionPane.ERROR_MESSAGE);
                                 	break;
                                 }
                                 col7Value = JOptionPane.showInputDialog(WECApp.this, "Inserisci valore per la data della prima licenza [yyyy-mm-dd]:");
@@ -584,7 +584,7 @@ public class WECApp extends JFrame {
                                 }
                     		}
                     		else {
-                    			JOptionPane.showMessageDialog(WECApp.this, "Vincolo d'integrità violato", "Errore", JOptionPane.ERROR_MESSAGE);
+                    			JOptionPane.showMessageDialog(WECApp.this, "Vincolo d'integrità violato [Non esiste quella vettura]", "Errore", JOptionPane.ERROR_MESSAGE);
                     		}
                     	}
                     	break;
@@ -611,7 +611,7 @@ public class WECApp extends JFrame {
                     			}
                     		}
                     		else {
-                    			JOptionPane.showMessageDialog(WECApp.this, "Gentleman driver non trovato", "Errore", JOptionPane.ERROR_MESSAGE);
+                    			JOptionPane.showMessageDialog(WECApp.this, "Vincolo d'integrità violato [Gentleman driver non trovato]", "Errore", JOptionPane.ERROR_MESSAGE);
                     		}
                     	}
                     	break;
@@ -632,30 +632,28 @@ public class WECApp extends JFrame {
                             		preparedStatement2.setString(1, col1Value);
                             		resultSet = preparedStatement2.executeQuery();
                             		if(handleResultSet(resultSet, "count") == 1) {
-                            			query = "select count(*) as iscrizioni from iscrizione where numero_vettura = \"" + newValue + "\" and nome_gara = \"" + col1Value + "\";";
+                            			query = "select count(*) from iscrizione where numero_vettura = \"" + newValue + "\" and nome_gara = \"" + col1Value + "\";";
                             			
                             			try (PreparedStatement preparedStatement3 = connection.prepareStatement(query)) {
                                     		resultSet = preparedStatement3.executeQuery();
-                                    		if(handleResultSet(resultSet, "count") == 1) {
-                                    			query = "insert into iscrizione (numero_vettura, nome_gara, punteggio, stato_fine_gara) values (\"" + newValue + "\", \"" + col1Value + "\", -1, NonTerminato);";
+                                    		if(handleResultSet(resultSet, "count") == 0) {
+                                    			query = "insert into iscrizione (numero_vettura, nome_gara, punteggio, stato_fine_gara) values (\"" + newValue + "\", \"" + col1Value + "\", \"0\", \"nonterminato\");";
                                     			
-                                    			try (PreparedStatement preparedStatement4 = connection.prepareStatement(query)) {
-                                            		resultSet = preparedStatement4.executeQuery();
-                                            		resultArea.setText("Inserimento iscrizione eseguito con successo!");
-                                    			}
+                                    			statement.executeUpdate(query);
+                                    			resultArea.setText("Inserimento iscrizione eseguito con successo!");
                                     		}
                                     		else {
-                                    			JOptionPane.showMessageDialog(WECApp.this, "Iscrizione già effettuata", "Errore", JOptionPane.ERROR_MESSAGE);
+                                    			JOptionPane.showMessageDialog(WECApp.this, "Vincolo d'integrità violato [Iscrizione già effettuata]", "Errore", JOptionPane.ERROR_MESSAGE);
                                     		}
                             			}
                             		}
                             		else {
-                            			JOptionPane.showMessageDialog(WECApp.this, "Gara non trovata", "Errore", JOptionPane.ERROR_MESSAGE);
+                            			JOptionPane.showMessageDialog(WECApp.this, "Vincolo d'integrità violato [Gara non trovata]", "Errore", JOptionPane.ERROR_MESSAGE);
                             		}
                     			}
                     		}
                     		else {
-                    			JOptionPane.showMessageDialog(WECApp.this, "Vettura non trovata", "Errore", JOptionPane.ERROR_MESSAGE);
+                    			JOptionPane.showMessageDialog(WECApp.this, "Vincolo d'integrità violato [Vettura non trovata]", "Errore", JOptionPane.ERROR_MESSAGE);
                     		}
                     	}
                     	break;
@@ -688,7 +686,7 @@ public class WECApp extends JFrame {
                         		}
                     		}
                         	else {
-                        		JOptionPane.showMessageDialog(WECApp.this, "Gara non trovata", "Errore", JOptionPane.ERROR_MESSAGE);
+                        		JOptionPane.showMessageDialog(WECApp.this, "Vincolo d'integrità violato [Gara non trovata]", "Errore", JOptionPane.ERROR_MESSAGE);
                         	}
                     	}
                     	break;
@@ -706,7 +704,7 @@ public class WECApp extends JFrame {
                         		resultArea.setText("Ci sono attualmente: " + handleResultSet(resultSet, "cycle") + " componenti nella vettura: " + newValue);
                     		}
                     		else {
-                        		JOptionPane.showMessageDialog(WECApp.this, "Vettura non trovata", "Errore", JOptionPane.ERROR_MESSAGE);
+                        		JOptionPane.showMessageDialog(WECApp.this, "Vincolo d'integrità violato [Vettura non trovata]", "Errore", JOptionPane.ERROR_MESSAGE);
                         	}
                     	}
                     default:
