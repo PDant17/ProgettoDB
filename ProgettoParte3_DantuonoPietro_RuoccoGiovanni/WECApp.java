@@ -99,7 +99,7 @@ public class WECApp extends JFrame {
                 		displayResultSet(resultSet);
                     	break;
                     	
-                	case 15: query = "select nome_scuderia, left(avg(media_auto), 10) as media_tra_auto from (select scuderia.nome as nome_scuderia, vettura.numero_di_gara, sum(iscrizione.punteggio) / sum((round(time_to_sec(gara.durata) / 60))) as media_auto from scuderia inner join vettura on scuderia.nome = vettura.nome_scuderia inner join iscrizione on vettura.numero_di_gara = iscrizione.numero_vettura inner join gara on iscrizione.nome_gara = gara.nome group by scuderia.nome, vettura.numero_di_gara) as medie_per_auto group by nome_scuderia;";
+                	case 15: query = "select nome_scuderia, left(avg(media_auto), 10) as media_tra_auto from (select scuderia.nome as nome_scuderia, vettura.numero_di_gara, sum(iscrizione.punteggio) / sum((round(time_to_sec(gara.durata) / 60))) as media_auto from scuderia inner join vettura on scuderia.nome = vettura.nome_scuderia inner join iscrizione on vettura.numero_di_gara = iscrizione.numero_vettura inner join gara on iscrizione.nome_gara = gara.nome where not iscrizione.stato_fine_gara = \"nonterminato\" group by scuderia.nome, vettura.numero_di_gara) as medie_per_auto group by nome_scuderia;";
                         resultSet = statement.executeQuery(query);
                         displayResultSet(resultSet);
                         break;
